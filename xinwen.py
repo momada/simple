@@ -122,7 +122,7 @@ def fetch(id, conn=conn, debug=False):
         except:
             print sys.exc_info()[1]
             continue
-
+    res = re.compile(r'<div class="maincontainer">(.*?)<div class="banners">', re.DOTALL).findall(res)[0]
     title = re.compile(r'<h3>(.*?)</h3>', re.DOTALL).findall(res)
     if title:
         title = title[0].encode('utf-8')
