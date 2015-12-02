@@ -1,0 +1,17 @@
+$def with (p)
+$code
+pages=p[0]
+arg = p[1]
+
+<table cellpadding=0 cellspacing=0 align=center width=750>
+    <tr height=35 valign=bottom align=right>
+        <td class="wt"><font size=2>
+            <a href="$arg=1">首页</a>
+            <a href="$arg=$pages[0]">上页</a>
+            $for p in pages[3:]:
+            <a href="$arg=$p">$p</a>
+            <a href="$arg=$pages[1]">下页</a>
+            <a href="$arg=$pages[2]">末页</a>
+        </font></td>
+    </tr>
+</table>

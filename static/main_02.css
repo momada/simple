@@ -1,0 +1,116 @@
+#td{line-height:180%;background-color:#F3F4EC;font-family:"Microsoft YaHei","WenQuanYi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+.xt{font-size:14px;line-height:150%; border-bottom:1px #bbbbbb dashed;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+.nt{font-size:14px;line-height:150%; border-bottom:1px #bbbbbb dashed;background-color:#E2E6EE;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+.yt{font-size:14px;color: navy;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+.bt{font-size:14px;line-height:180%; border-bottom:1px #bbbbbb solid;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+.inp{font-size:14px; height: 28px;}
+.wt{font-size:14px;line-height:180%;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+.zt{font-size:10px;color: darkblue;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+a:link {color: black; text-decoration: none }
+a:active {color: black; text-decoration: none}
+a:visited {color: black; text-decoration: none}
+a:hover {color: black; text-decoration: none}
+a.cat:link {color: red; text-decoration: none }
+a.cat:active {color: red; text-decoration: none}
+a.cat:visited {color: red; text-decoration: none}
+a.cat:hover {color: blue; text-decoration: underline;position:relative;left:1px;top:1px}
+a.tt:link {color: black; text-decoration: none}
+a.tt:active {color: blue; text-decoration: underline}
+a.tt:visited {color: black; text-decoration: none;}
+a.tt:hover {color: blue; text-decoration: underline;position:relative;left:1px;top:1px}
+a.bl:link {color: blue; text-decoration: none}
+a.bl:active {color: red; text-decoration: none}
+a.bl:visited {color: blue; text-decoration: none}
+a.bl:hover {color: red; text-decoration: underline;position:relative;left:1px;top:1px}
+a.tl:link {color: #123b8d; text-decoration: none}
+a.tl:active {color: blue; text-decoration: none}
+a.tl:visited {color: #123b8d; text-decoration: none}
+a.tl:hover {color: blue; text-decoration: underline;position:relative;left:1px;top:1px}
+body {margin-top:0px;margin-right:0px;margin-bottom:0px;background-color:#F3F4EC;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+h1 {font-size:22px;line-height:180%;margin:0px;padding: 0px;color: #cc0000;}
+p {font-size:10.5px;line-height:180%;}
+input{font-size:12px;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";height:25px;background-color:#F3F4EC}
+div,form,img,ul,li,img{margin:0; padding:0; border:0;}
+table{background-color:#F3F4EC;} 
+#popupcontent{
+position: relative;
+visibility: hidden;
+border:1px solid #CCC;
+background-color:#F9F9F9;
+border:1px solid #333;
+padding:5px;
+overflow:scroll;
+}
+
+/* root element for tabs  */
+ul.tabs { 
+	list-style:none; 
+	font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";
+	margin:auto !important; 
+	padding:0;	
+	border-bottom:1px solid #666;	
+	height:30px;
+	width:750px;
+	position:relative;
+}
+
+/* single tab */
+ul.tabs li { 
+	float:left;	 
+	text-indent:0;
+	padding:0;
+	margin:0 !important;
+	list-style-image:none !important; 
+}
+
+
+/* link inside the tab. uses a background image */
+ul.tabs a { 
+	background: url(/static/blue.png) no-repeat -420px 0;
+	font-size:15px;
+        font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";
+	display:block;
+	height: 30px;  
+	line-height:30px;
+	width: 134px;
+	text-align:center;	
+	text-decoration:none;
+	color:#333;
+	padding:0px;
+	margin:0px;	
+	position:relative;
+	top:1px;
+}
+
+ul.tabs a:active {
+	outline:none;		
+}
+
+/* when mouse enters the tab move the background image */
+ul.tabs a:hover {
+	background-position: -420px -31px;	
+	color:#fff;	
+}
+
+/* active tab uses a class name "current". its highlight is also done by moving the background image. */
+ul.tabs a.current, ul.tabs a.current:hover, ul.tabs li.current a {
+	background-position: -420px -62px;		
+	cursor:default !important; 
+	color:#000 !important;
+}
+
+/* width 1 */
+ul.tabs a.s 	{ background-position: -553px 0; width:81px; }
+ul.tabs a.s:hover 	{ background-position: -553px -31px; }
+ul.tabs a.s.current  { background-position: -553px -62px; }
+
+/* width 2 */
+ul.tabs a.l 			{ background-position: -248px -0px; width:174px; }
+ul.tabs a.l:hover 	{ background-position: -248px -31px; }
+ul.tabs a.l.current  { background-position: -248px -62px; }
+
+
+/* width 3 */
+ul.tabs a.xl 			{ background-position: 0 -0px; width:248px; }
+ul.tabs a.xl:hover 	{ background-position: 0 -31px; }
+ul.tabs a.xl.current { background-position: 0 -62px; }

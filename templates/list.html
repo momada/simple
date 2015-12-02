@@ -1,0 +1,19 @@
+$def with (items)
+
+<table cellpadding=0 cellspacing=0 align=center width=750>
+    <tr>
+        <td class="bt"><b>新闻标题</b></td>
+        <td class="bt" width=120><b>新闻来源</b></td>
+        <td class="bt" width=160><b>发布时间</b></td>
+        <td class="bt" width=80><b>原链接</b></td>
+    </tr>
+    $for item in items:
+    <tr height=30>
+        <td class="xt" valign=middle><a href="/?id=$item.news_id">$:item.title</a></td>
+        <td class="xt">$:item.source</td>
+        <td class="xt">$:item.post_date</td>
+        <td class="xt"><a href="$item.link" target="_blank">News$item.news_id</a></td>
+    </tr>
+</table>
+
+		
