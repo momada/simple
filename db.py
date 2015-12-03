@@ -21,5 +21,5 @@ def maxx():
 
 
 if __name__ == '__main__':
-    q = "post_date > '2015-10-1'"
+    q = "post_date < '2015-10-1'"
     config.DB.delete('news', where=q)
