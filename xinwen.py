@@ -142,7 +142,7 @@ def fetch(id, conn=conn, debug=False):
 
     if content:
         content = content[0]
-        content = re.compile(r'<div style=(.*?)</div>', re.DOTALL).sub('', content)
+        content = re.compile(r'<div style=(.*?)', re.DOTALL).sub('', content)
         content = re.compile(r'<br />', re.DOTALL).sub('\n', content)
         content = re.compile(r'<.*?>', re.DOTALL).sub('', content)
         content = re.compile(r'&.*?;', re.DOTALL).sub(' ', content)
@@ -157,6 +157,9 @@ def fetch(id, conn=conn, debug=False):
         print content
         print post_date
         print web_site
+
+    if not content:
+        print news_id
 
     tries = 0
     while tries < 2:
