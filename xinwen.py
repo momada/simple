@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
 # news.py fetch news from web sites
 
 import datetime
@@ -136,8 +135,7 @@ def fetch(id, conn=conn, debug=False):
         post_date = re.compile(r'datetime(.*?)</time>', re.DOTALL).findall(parse)[0]
         post_date = post_date.split('>')[1]
         content = re.compile(r'<div id="articleContent" class="article">(.*?)<div class="sharewechat">',
-                             re.DOTALL).findall(
-            res)
+                             re.DOTALL).findall(res)
     # print "Content:",content
     except:
         return
