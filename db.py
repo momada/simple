@@ -18,3 +18,8 @@ def search(_filter, num):
 
 def maxx():
     return config.DB.select('news', what="count(*) as count")[0].count
+
+
+if __name__ == '__main__':
+    q = "post_date > '2015-10-1'"
+    config.DB.delete('news', where=q)
