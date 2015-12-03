@@ -1,11 +1,11 @@
-#td{line-height:180%;background-color:#F3F4EC;font-family:"Microsoft YaHei","WenQuanYi Micro Hei Light","tahoma", "arial", "ms sans serif";}
-.xt{font-size:14px;line-height:150%; border-bottom:1px #bbbbbb dashed;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
-.nt{font-size:14px;line-height:150%; border-bottom:1px #bbbbbb dashed;background-color:#E2E6EE;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
-.yt{font-size:14px;color: navy;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
-.bt{font-size:14px;line-height:180%; border-bottom:1px #bbbbbb solid;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+#td{line-height:180%;background-color:#F3F4EC;font-family:"Noto Sans";}
+.xt{font-size:14px;line-height:150%; border-bottom:1px #bbbbbb dashed;font-family:"Noto Sans";}
+.nt{font-size:14px;line-height:150%; border-bottom:1px #bbbbbb dashed;background-color:#E2E6EE;font-family:"Noto Sans";}
+.yt{font-size:14px;color: navy;font-family:"Noto Sans";}
+.bt{font-size:14px;line-height:180%; border-bottom:1px #bbbbbb solid;font-family:"Noto Sans";}
 .inp{font-size:14px; height: 28px;}
-.wt{font-size:14px;line-height:180%;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
-.zt{font-size:10px;color: darkblue;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+.wt{font-size:14px;line-height:180%;font-family:"Noto Sans";}
+.zt{font-size:10px;color: darkblue;font-family:"Noto Sans";}
 a:link {color: black; text-decoration: none }
 a:active {color: black; text-decoration: none}
 a:visited {color: black; text-decoration: none}
@@ -26,10 +26,10 @@ a.tl:link {color: #123b8d; text-decoration: none}
 a.tl:active {color: blue; text-decoration: none}
 a.tl:visited {color: #123b8d; text-decoration: none}
 a.tl:hover {color: blue; text-decoration: underline;position:relative;left:1px;top:1px}
-body {margin-top:0px;margin-right:0px;margin-bottom:0px;background-color:#F3F4EC;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";}
+body {margin-top:0px;margin-right:0px;margin-bottom:0px;background-color:#F3F4EC;font-family:"Noto Sans";}
 h1 {font-size:22px;line-height:180%;margin:0px;padding: 0px;color: #cc0000;}
 p {font-size:10.5px;line-height:180%;}
-input{font-size:12px;font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";height:25px;background-color:#F3F4EC}
+input{font-size:12px;font-family:"Noto Sans";height:25px;background-color:#F3F4EC}
 div,form,img,ul,li,img{margin:0; padding:0; border:0;}
 table{background-color:#F3F4EC;} 
 #popupcontent{
@@ -45,7 +45,7 @@ overflow:scroll;
 /* root element for tabs  */
 ul.tabs { 
 	list-style:none; 
-	font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";
+	font-family:"Noto Sans";
 	margin:auto !important; 
 	padding:0;	
 	border-bottom:1px solid #666;	
@@ -68,7 +68,7 @@ ul.tabs li {
 ul.tabs a { 
 	background: url(/static/blue.png) no-repeat -420px 0;
 	font-size:15px;
-        font-family:"Microsoft YaHei","Wenquanyi Micro Hei Light","tahoma", "arial", "ms sans serif";
+        font-family:"Noto Sans";
 	display:block;
 	height: 30px;  
 	line-height:30px;
