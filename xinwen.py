@@ -17,15 +17,13 @@ path = os.path.dirname(os.path.realpath(sys.argv[0]))
 conn = sqlite3.connect(path + '/news.sqlite3.db')
 conn.text_factory = str
 q = Queue()
-MAXC = 3
+MAXC = 10
 
 
 def thread_fetch():
-    conn = sqlite3.connect(path + '/news.sqlite3.db')
-    conn.text_factory = str
     while True:
         topic = q.get()
-        fetch(topic, conn)
+        fetch(topic)
         q.task_done()
 
 
@@ -103,14 +101,17 @@ def singtao():
     return
 
 
-def fetch(id, conn=conn, debug=False):
+def fetch(id, debug=False):
+    con = sqlite3.connect(path + '/news.sqlite3.db')
+    con.text_factory = str
     print 'fetching topic', id, '...'
     urlbase = 'http://www.wenxuecity.com'
     url = urlbase + id
     news_id = id.split('/')[5]
     news_id = news_id.split('.')[0]
     w = "文学城"
-    if dbfind(news_id, w, conn):
+    if dbfind(news_id, w, con):
+        con.close()
         return
 
     res = ''
@@ -128,6 +129,7 @@ def fetch(id, conn=conn, debug=False):
         link = url
         web_site = '文学城'
     else:
+        con.close()
         return
     try:
         parse = re.compile(r'<div id="postmeta">(.*?) <span>', re.DOTALL).search(res).group(1)
@@ -138,6 +140,7 @@ def fetch(id, conn=conn, debug=False):
                              re.DOTALL).findall(res)
     # print "Content:",content
     except:
+        con.close()
         return
 
     if content:
@@ -164,8 +167,8 @@ def fetch(id, conn=conn, debug=False):
     tries = 0
     while tries < 2:
         try:
-            if not dbfind(news_id, web_site, conn):
-                dbinsert(news_id, title, source, content, post_date, link, web_site, conn)
+            if not dbfind(news_id, web_site, con):
+                dbinsert(news_id, title, source, content, post_date, link, web_site, con)
             else:
                 continue
             # dbupdate(news_id,title,source,content,post_date,link,web_site,conn)
@@ -175,7 +178,7 @@ def fetch(id, conn=conn, debug=False):
             tries += 1;
             time.sleep(5);
             continue;
-
+    con.close()
     return post_date
 
 
