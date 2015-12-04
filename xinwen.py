@@ -95,8 +95,8 @@ def singtao():
                 print sys.exc_info()[0]
                 tries += 1;
                 time.sleep(10);
-                continue;
-            break;
+                continue
+            break
 
     return
 
