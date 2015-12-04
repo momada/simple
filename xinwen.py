@@ -89,7 +89,6 @@ def singtao():
                     dbinsert(topic, title, source, content, post_date, urlbase, web_site, conn)
                 else:
                     continue
-
             except Exception:
                 print urlbase
                 print sys.exc_info()[0]
