@@ -96,7 +96,6 @@ def singtao():
                 time.sleep(10);
                 continue
             break
-
     return
 
 
