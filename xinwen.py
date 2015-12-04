@@ -48,8 +48,8 @@ def wenxue(num=1):
 
 
 def singtao():
-    conn = sqlite3.connect(path + '/singtao.db')
-    conn.text_factory = str
+    cons = sqlite3.connect(path + '/singtao.db')
+    cons.text_factory = str
     url = 'http://news.singtao.ca/vancouver/' + datetime.date.today().strftime("%Y-%m-%d") + '/'
     res = httpfetch(url, 'utf-8')
     #    f=file('a.html','r')
@@ -65,7 +65,7 @@ def singtao():
 
         try:
             item_page = httpfetch(urlbase, 'utf-8', report=True)
-        except:
+        except Exception:
             print "Unexpected error:", sys.exc_info()[1]
 
         try:
@@ -85,12 +85,12 @@ def singtao():
         tries = 0
         while tries < 2:
             try:
-                if not dbfind(topic, web_site, conn):
+                if not dbfind(topic, web_site, cons):
                     dbinsert(topic, title, source, content, post_date, urlbase, web_site, conn)
                 else:
                     continue
 
-            except:
+            except Exception:
                 print urlbase
                 print sys.exc_info()[0]
                 tries += 1;
