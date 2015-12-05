@@ -151,9 +151,9 @@ def fetch(i, debug=False):
                 print web_site
 
             if not database.find(news_id, web_site):
-                database.insert(news_id, title, source, content, post_date, link, web_site)
+                database.insert(news_id, title, source, content, post_date, link, web_site, conn)
             else:
-                database.update(news_id, title, source, content, post_date, link, web_site)
+                database.update(news_id, title, source, content, post_date, link, web_site, conn)
         except:
             print ""
     return post_date
