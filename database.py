@@ -86,6 +86,7 @@ def clean(days):
         print "An error occurred:", e.args[0]
     conn.commit()
     c.close()
+    print "clean up for %s days" % days
     return
 
 
