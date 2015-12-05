@@ -15,7 +15,7 @@ import database
 from download import httpfetch
 
 q = Queue()
-MAXC = 10
+MAXC = 30
 
 
 def thread_fetch():
@@ -25,10 +25,10 @@ def thread_fetch():
         q.task_done()
 
 
-def wenxue(num=1):
+def wenxue(num=3):
     urlbase = 'http://www.wenxuecity.com/news/'
     for i in range(1, num + 1):
-        print 'fetching wenxue city news on page', i, '...'
+        # print 'fetching wenxue city news on page', i, '...'
         url = urlbase + "morenews/?page=" + str(i)
         res = httpfetch(url, 'gb2312')
         res2 = re.compile(r'<div class="list" id="contentList">(.*?)<div class="turnpage">', re.DOTALL).findall(res)
@@ -39,9 +39,9 @@ def wenxue(num=1):
         # 抓取新闻条目的ID
         topics = re.compile(r'<a href="(.*?)" target="_blank">', re.DOTALL).findall(res2)
         topics = set(topics)
-
-        print topics
+        # print topics
         for topic in topics:
+            # print topic
             q.put(topic)
     return
 
@@ -102,14 +102,14 @@ def fetch(i, debug=False):
     path = os.path.dirname(os.path.realpath(sys.argv[0]))
     conn = sqlite3.connect(path + '/news.sqlite3.db')
     conn.text_factory = str
-    print 'fetching topic', i, '...'
+    # print 'fetching topic', i, '...'
     urlbase = 'http://www.wenxuecity.com'
     url = urlbase + i
     news_id = i.split('/')[5]
     news_id = news_id.split('.')[0]
     w = "文学城"
-    if database.find(news_id, w, conn):
-        return
+    # if database.find(news_id, w, conn):
+    #     return
     res = ''
     for _ in range(3):
         try:
@@ -130,10 +130,10 @@ def fetch(i, debug=False):
             post_date = re.compile(r'datetime(.*?)</time>', re.DOTALL).findall(parse)[0]
             post_date = post_date.split('>')[1]
             content = re.compile(r'<div id="articleContent" class="article">(.*?)<div class="sharewechat">',
-                                 re.DOTALL).findall(res)
+                                 re.DOTALL).findall(res)[0]
             if content:
-                content = content[0]
-                content = re.compile(r'<div style=(.*?)', re.DOTALL).sub('', content)
+                # content = content[0]
+                content = re.compile(r'<div style=(.*?)>', re.DOTALL).sub('', content)
                 content = re.compile(r'<br />', re.DOTALL).sub('\n', content)
                 content = re.compile(r'<.*?>', re.DOTALL).sub('', content)
                 content = re.compile(r'&.*?;', re.DOTALL).sub(' ', content)
@@ -150,7 +150,7 @@ def fetch(i, debug=False):
                 print post_date
                 print web_site
 
-            if not database.find(news_id, web_site):
+            if not database.find(news_id, web_site, conn):
                 database.insert(news_id, title, source, content, post_date, link, web_site, conn)
             else:
                 database.update(news_id, title, source, content, post_date, link, web_site, conn)

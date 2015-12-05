@@ -6,7 +6,6 @@ import datetime
 import os
 import sqlite3
 import sys
-import time
 
 path = os.path.dirname(os.path.realpath(sys.argv[0]))
 conn = sqlite3.connect(path + '/news.sqlite3.db')
@@ -28,39 +27,32 @@ def find(i, website, conn):
 
 def insert(i, title, source, content, post_date, link, web_site, conn):
     c = conn.cursor()
-    tries = 0
-    while tries < 1:
-        try:
-            c.execute('insert into news values(?,?,?,?,?,?,?)', \
-                      (i, title, source, content, post_date, link, web_site))
-            break
-        except:
-            print sys.exc_info()[0]
-            print sys.exc_info()[1]
-            print sys.exc_info()[2]
-            tries += 1
-            time.sleep(500)
-            continue
+    try:
+        c.execute('insert into news values(?,?,?,?,?,?,?)', \
+                  (i, title, source, content, post_date, link, web_site))
+    except:
+        print sys.exc_info()[0]
+        print sys.exc_info()[1]
+        print sys.exc_info()[2]
     conn.commit()
     c.close()
+    print "insert:", title, post_date
     return
 
 
 def update(id, title, source, content, post_date, link, web_site, conn):
-    tries = 0
     c = conn.cursor()
-    while tries < 10:
-        try:
-            c.execute(
-                'update news set news_id=?,title=?,source=?,content=?,post_date=?,link=?,web_site=? where news_id=?',
-                (id, title, source, content, post_date, link, web_site, id))
-            break
-        except:
-            tries += 1
-            time.sleep(5)
-            continue
+    try:
+        c.execute(
+            'update news set news_id=?,title=?,source=?,content=?,post_date=?,link=?,web_site=? where news_id=?',
+            (id, title, source, content, post_date, link, web_site, id))
+    except:
+        print sys.exc_info()[0]
+        print sys.exc_info()[1]
+        print sys.exc_info()[2]
     conn.commit()
     c.close()
+    print "update:,", title, post_date
     return
 
 
@@ -103,3 +95,7 @@ def list_news():
     for x in c:
         print x[0], x[1]
     return
+
+
+if __name__ == "__main__":
+    clean(6)
