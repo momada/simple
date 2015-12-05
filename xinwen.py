@@ -25,7 +25,7 @@ def thread_fetch():
         q.task_done()
 
 
-def wenxue(num=3):
+def wenxue(num=2):
     urlbase = 'http://www.wenxuecity.com/news/'
     for i in range(1, num + 1):
         # print 'fetching wenxue city news on page', i, '...'
@@ -134,7 +134,7 @@ def fetch(i, debug=False):
             if content:
                 # content = content[0]
                 content = re.compile(r'<div style=(.*?)>', re.DOTALL).sub('', content)
-                content = re.compile(r'<br />', re.DOTALL).sub('\n', content)
+                content = re.compile(r'<br>', re.DOTALL).sub('', content)
                 content = re.compile(r'<.*?>', re.DOTALL).sub('', content)
                 content = re.compile(r'&.*?;', re.DOTALL).sub(' ', content)
                 content = re.compile(r'\n\s+', re.DOTALL).sub('\n', content)
