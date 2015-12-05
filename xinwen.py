@@ -3,7 +3,6 @@
 # news.py fetch news from web sites
 
 import datetime
-import os
 import re
 import sqlite3
 import sys
@@ -11,11 +10,9 @@ import time
 from Queue import Queue
 from threading import Thread
 
+import database
 from download import httpfetch
 
-path = os.path.dirname(os.path.realpath(sys.argv[0]))
-conn = sqlite3.connect(path + '/news.sqlite3.db')
-conn.text_factory = str
 q = Queue()
 MAXC = 10
 
@@ -45,6 +42,7 @@ def wenxue(num=1):
         print topics
         for topic in topics:
             q.put(topic)
+    return
 
 
 def singtao():
@@ -100,15 +98,15 @@ def singtao():
 
 
 def fetch(id, debug=False):
-    con = sqlite3.connect(path + '/news.sqlite3.db')
-    con.text_factory = str
+    #    con = sqlite3.connect(path + '/news.sqlite3.db')
+    #    con.text_factory = str
     print 'fetching topic', id, '...'
     urlbase = 'http://www.wenxuecity.com'
     url = urlbase + id
     news_id = id.split('/')[5]
     news_id = news_id.split('.')[0]
     w = "文学城"
-    if dbfind(news_id, w, con):
+    if database.dbfind(news_id, w, con):
         con.close()
         return
 
@@ -180,91 +178,10 @@ def fetch(id, debug=False):
     return post_date
 
 
-def dbcreate():
-    c = conn.cursor()
-    try:
-        c.execute('''create table news(
-        news_id text,
-        title text,
-        source text,
-        content text,
-        post_date text,
-        link text,
-        web_site text
-        )''')
-        conn.commit()
-        c.close()
-    except:
-        print "Unexpected error:", sys.exc_info()[1]
 
 
-def dbinsert(id, title, source, content, post_date, link, web_site, conn):
-    c = conn.cursor()
-    tries = 0
-    while tries < 1:
-        try:
-            c.execute('insert into news values(?,?,?,?,?,?,?)', \
-                      (id, title, source, content, post_date, link, web_site))
-            break
-        except:
-            print sys.exc_info()[0]
-            print sys.exc_info()[1]
-            print sys.exc_info()[2]
-            tries += 1
-            time.sleep(500)
-            continue
-    conn.commit()
-    c.close()
 
 
-def dbclean(days):
-    c = conn.cursor()
-    try:
-        today = datetime.date.today()
-        delta = datetime.timedelta(days=int(days))
-        margin_date = today - delta
-        c.execute('delete from news where post_date < "' + margin_date.strftime("%Y-%m-%d") + '" ')
-    except sqlite3.Error, e:
-        print "An error occurred:", e.args[0]
-    conn.commit()
-    c.close()
-
-
-def dbupdate(id, title, source, content, post_date, link, web_site, conn):
-    tries = 0
-    c = conn.cursor()
-    while tries < 10:
-        try:
-            c.execute(
-                'update news set news_id=?,title=?,source=?,content=?,post_date=?,link=?,web_site=? where news_id=?', \
-                (id, title, source, content, post_date, link, web_site, id))
-            break
-        except:
-            tries += 1
-            time.sleep(5)
-            continue
-            conn.commit()
-            c.close()
-    return
-
-
-def dbfind(id, website, conn):
-    c = conn.cursor()
-    q = 'select 1 from news where news_id="' + id.encode('ascii') + '" and web_site="' + website.decode('utf-8') + '"'
-    c.execute(q)
-    for x in c:
-        if 1 in x:
-            return True
-        else:
-            return False
-    c.close()
-
-
-def dblist():
-    c = conn.cursor()
-    c.execute('select rowid,title from news')
-    for x in c:
-        print x[0], x[1]
 
 
 def usage():
