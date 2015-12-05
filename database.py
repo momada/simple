@@ -13,9 +13,9 @@ conn = sqlite3.connect(path + '/news.sqlite3.db')
 conn.text_factory = str
 
 
-def find(id, website):
+def find(i, website, conn):
     c = conn.cursor()
-    q = 'select 1 from news where news_id="' + id.encode('ascii') + '" and web_site="' + website.decode('utf-8') + '"'
+    q = 'select 1 from news where news_id="' + i.encode('ascii') + '" and web_site="' + website.decode('utf-8') + '"'
     c.execute(q)
     for x in c:
         if 1 in x:
@@ -26,13 +26,13 @@ def find(id, website):
     return
 
 
-def insert(id, title, source, content, post_date, link, web_site, conn):
+def insert(i, title, source, content, post_date, link, web_site, conn):
     c = conn.cursor()
     tries = 0
     while tries < 1:
         try:
             c.execute('insert into news values(?,?,?,?,?,?,?)', \
-                      (id, title, source, content, post_date, link, web_site))
+                      (i, title, source, content, post_date, link, web_site))
             break
         except:
             print sys.exc_info()[0]
@@ -46,7 +46,7 @@ def insert(id, title, source, content, post_date, link, web_site, conn):
     return
 
 
-def update(id, title, source, content, post_date, link, web_site):
+def update(id, title, source, content, post_date, link, web_site, conn):
     tries = 0
     c = conn.cursor()
     while tries < 10:
@@ -97,7 +97,7 @@ def clean(days):
     return
 
 
-def list():
+def list_news():
     c = conn.cursor()
     c.execute('select rowid,title from news')
     for x in c:

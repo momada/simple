@@ -3,6 +3,7 @@
 # news.py fetch news from web sites
 
 import datetime
+import os
 import re
 import sqlite3
 import sys
@@ -46,8 +47,8 @@ def wenxue(num=1):
 
 
 def singtao():
-    cons = sqlite3.connect(path + '/singtao.db')
-    cons.text_factory = str
+    # cons = sqlite3.connect(path + '/singtao.db')
+    # cons.text_factory = str
     url = 'http://news.singtao.ca/vancouver/' + datetime.date.today().strftime("%Y-%m-%d") + '/'
     res = httpfetch(url, 'utf-8')
     #    f=file('a.html','r')
@@ -57,7 +58,7 @@ def singtao():
 
     for topic in res2:
         web_site = '星島日報'
-        if dbfind(topic, web_site, conn):
+        if database.find(topic, web_site):
             return
         urlbase = url + 'headline' + topic + '.html'
 
@@ -83,8 +84,8 @@ def singtao():
         tries = 0
         while tries < 2:
             try:
-                if not dbfind(topic, web_site, cons):
-                    dbinsert(topic, title, source, content, post_date, urlbase, web_site, conn)
+                if not database.find(topic, web_site):
+                    database.insert(topic, title, source, content, post_date, urlbase, web_site)
                 else:
                     continue
             except Exception:
@@ -97,19 +98,18 @@ def singtao():
     return
 
 
-def fetch(id, debug=False):
-    #    con = sqlite3.connect(path + '/news.sqlite3.db')
-    #    con.text_factory = str
-    print 'fetching topic', id, '...'
+def fetch(i, debug=False):
+    path = os.path.dirname(os.path.realpath(sys.argv[0]))
+    conn = sqlite3.connect(path + '/news.sqlite3.db')
+    conn.text_factory = str
+    print 'fetching topic', i, '...'
     urlbase = 'http://www.wenxuecity.com'
-    url = urlbase + id
-    news_id = id.split('/')[5]
+    url = urlbase + i
+    news_id = i.split('/')[5]
     news_id = news_id.split('.')[0]
     w = "文学城"
-    if database.dbfind(news_id, w, con):
-        con.close()
+    if database.find(news_id, w, conn):
         return
-
     res = ''
     for _ in range(3):
         try:
@@ -124,64 +124,39 @@ def fetch(id, debug=False):
         title = title[0].encode('utf-8')
         link = url
         web_site = '文学城'
-    else:
-        con.close()
-        return
-    try:
-        parse = re.compile(r'<div id="postmeta">(.*?) <span>', re.DOTALL).search(res).group(1)
-        source = re.compile(r'itemprop="author">(.*?)</span>', re.DOTALL).findall(parse)[0]
-        post_date = re.compile(r'datetime(.*?)</time>', re.DOTALL).findall(parse)[0]
-        post_date = post_date.split('>')[1]
-        content = re.compile(r'<div id="articleContent" class="article">(.*?)<div class="sharewechat">',
-                             re.DOTALL).findall(res)
-    # print "Content:",content
-    except:
-        con.close()
-        return
-
-    if content:
-        content = content[0]
-        content = re.compile(r'<div style=(.*?)', re.DOTALL).sub('', content)
-        content = re.compile(r'<br />', re.DOTALL).sub('\n', content)
-        content = re.compile(r'<.*?>', re.DOTALL).sub('', content)
-        content = re.compile(r'&.*?;', re.DOTALL).sub(' ', content)
-        content = re.compile(r'\n\s+', re.DOTALL).sub('\n', content)
-        content = content.strip()
-    else:
-        content = ''
-
-    if debug:
-        print title
-        print source
-        print content
-        print post_date
-        print web_site
-
-    if not content:
-        print news_id
-
-    tries = 0
-    while tries < 2:
         try:
-            if not dbfind(news_id, web_site, con):
-                dbinsert(news_id, title, source, content, post_date, link, web_site, con)
+            parse = re.compile(r'<div id="postmeta">(.*?) <span>', re.DOTALL).search(res).group(1)
+            source = re.compile(r'itemprop="author">(.*?)</span>', re.DOTALL).findall(parse)[0]
+            post_date = re.compile(r'datetime(.*?)</time>', re.DOTALL).findall(parse)[0]
+            post_date = post_date.split('>')[1]
+            content = re.compile(r'<div id="articleContent" class="article">(.*?)<div class="sharewechat">',
+                                 re.DOTALL).findall(res)
+            if content:
+                content = content[0]
+                content = re.compile(r'<div style=(.*?)', re.DOTALL).sub('', content)
+                content = re.compile(r'<br />', re.DOTALL).sub('\n', content)
+                content = re.compile(r'<.*?>', re.DOTALL).sub('', content)
+                content = re.compile(r'&.*?;', re.DOTALL).sub(' ', content)
+                content = re.compile(r'\n\s+', re.DOTALL).sub('\n', content)
+                content = content.strip()
             else:
-                continue
-            # dbupdate(news_id,title,source,content,post_date,link,web_site,conn)
-            break;
+                content = ''
+                print news_id
+
+            if debug:
+                print title
+                print source
+                print content
+                print post_date
+                print web_site
+
+            if not database.find(news_id, web_site):
+                database.insert(news_id, title, source, content, post_date, link, web_site)
+            else:
+                database.update(news_id, title, source, content, post_date, link, web_site)
         except:
-            print sys.exc_info()[0]
-            tries += 1;
-            time.sleep(5);
-            continue;
-    con.close()
+            print ""
     return post_date
-
-
-
-
-
-
 
 
 def usage():
@@ -190,6 +165,7 @@ def usage():
   python news.py wenxue
   python news.py list
   '''
+    return
 
 
 # initialize thread pool
@@ -212,15 +188,15 @@ if __name__ == '__main__':
         usage()
     elif len(sys.argv) > 1:
         if sys.argv[1] == 'createdb':
-            dbcreate()
+            database.create()
         elif sys.argv[1] == 'wenxue':
             wenxue()
         elif sys.argv[1] == 'singtao':
             singtao()
         elif sys.argv[1] == 'list':
-            dblist()
+            database.list_news()
         elif sys.argv[1] == 'clean':
-            dbclean(sys.argv[2])
+            database.clean(sys.argv[2])
         else:
             fetch((sys.argv[1]), debug=False)
 
