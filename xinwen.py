@@ -15,7 +15,7 @@ import database
 from download import httpfetch
 
 q = Queue()
-MAXC = 30
+MAXC = 10
 
 
 def thread_fetch():
