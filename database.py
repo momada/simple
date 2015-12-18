@@ -92,11 +92,12 @@ def clean(days):
 
 def list_news():
     c = conn.cursor()
-    c.execute('select rowid,title from news')
+    c.execute('select rowid,title from news where web_site = "星島日報" order by post_date desc')
     for x in c:
         print x[0], x[1]
     return
 
 
 if __name__ == "__main__":
-    clean(6)
+    # clean(6)
+    list_news()

@@ -47,8 +47,9 @@ def wenxue(num=2):
 
 
 def singtao():
-    # cons = sqlite3.connect(path + '/singtao.db')
-    # cons.text_factory = str
+    path = os.path.dirname(os.path.realpath(sys.argv[0]))
+    cons = sqlite3.connect(path + '/singtao.db')
+    cons.text_factory = str
     url = 'http://news.singtao.ca/vancouver/' + datetime.date.today().strftime("%Y-%m-%d") + '/'
     res = httpfetch(url, 'utf-8')
     #    f=file('a.html','r')

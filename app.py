@@ -10,13 +10,12 @@ import view
 import ystockquote
 from view import render
 
-urls = ('/', 'index',
-        '/map', 'realmap',
-        '/singtao', 'singtao',
-        '/singtao/', 'singtao')
+urls = ('/', 'inDex',
+        '/singtao', 'singTao',
+        '/singtao/', 'singTao')
 
 
-class index:
+class inDex:
     def GET(self):
         i = web.input(id=None, p='1', q=None)
         # Detail Page
@@ -48,7 +47,7 @@ class index:
         return render.base([body, page, i.q, s])
 
 
-class singtao:
+class singTao:
     def GET(self):
         i = web.input(id=None, p='1')
         # Detail Page
