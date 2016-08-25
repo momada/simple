@@ -8,7 +8,7 @@ import sqlite3
 import sys
 
 path = os.path.dirname(os.path.realpath(sys.argv[0]))
-conn = sqlite3.connect(path + '/news.sqlite3.db')
+conn = sqlite3.connect('news.sqlite3.db')
 conn.text_factory = str
 
 

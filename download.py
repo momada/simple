@@ -3,34 +3,12 @@
 #
 # download.py: download with report
 
-import os
 import sys
 import urllib2
 from time import sleep
 
-# from time import time,sleep
-#from urllib import ContentTooShortError
 
-path = os.path.dirname(os.path.realpath(sys.argv[0]))
-
-#proxies = {'http':'http://proxyaddress:port'}
-#proxy_support = urllib2.ProxyHandler(proxies)
-#opener = urllib2.build_opener(proxy_support, urllib2.HTTPHandler)
-#urllib2.install_opener(opener)
-
-#functions
-def report(blocknum, bs, size, t):
-    if t == 0:
-        t = 1
-    if size == -1:
-        print '%10s' % (str(blocknum * bs)) + ' downloaded | Speed =' + '%5.2f' % (bs / t / 1024) + 'KB/s'
-    else:
-        percent = int(blocknum * bs * 100 / size)
-        print '%10s' % (str(blocknum * bs)) + '/' + str(size) + 'downloaded | ' + str(
-            percent) + '% Speed =' + '%5.2f' % (bs / t / 1024) + 'KB/s'
-
-
-def httpfetch(url, charset, headers={}, reporthook=report, postData=None, report=True):
+def httpfetch(url, charset, headers={}, postData=None, report=True):
     ok = False
     for _ in range(2):
         try:
@@ -40,7 +18,6 @@ def httpfetch(url, charset, headers={}, reporthook=report, postData=None, report
             rawdata = fp.read()
             #print rawdata
             rawdata = rawdata.decode(charset, 'ignore')
-
             ok = True
             break
         except:
