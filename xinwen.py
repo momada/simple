@@ -15,7 +15,7 @@ import database
 from download import httpfetch
 
 q = Queue()
-MAXC = 10
+MAXC = 15
 
 
 def thread_fetch():
@@ -47,9 +47,8 @@ def wenxue(num=2):
 
 
 def singtao():
-    path = os.path.dirname(os.path.realpath(sys.argv[0]))
-    cons = sqlite3.connect(path + '/singtao.db')
-    cons.text_factory = str
+    # cons = sqlite3.connect(path + '/singtao.db')
+    # cons.text_factory = str
     url = 'http://news.singtao.ca/vancouver/' + datetime.date.today().strftime("%Y-%m-%d") + '/'
     res = httpfetch(url, 'utf-8')
     #    f=file('a.html','r')
